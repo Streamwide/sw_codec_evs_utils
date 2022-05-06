@@ -194,7 +194,7 @@ struct sw_codec_evs_encoder* sw_codec_evs_encoder_create(const struct sw_codec_e
     memset(encoder, 0, sizeof(struct sw_codec_evs_encoder));
 
     if (params->is_amrwb_rfc4867) {
-        encoder->modes     = sw_codec_amrwb_modes;533
+        encoder->modes     = sw_codec_amrwb_modes;
         encoder->modes_len = SW_CODEC_AMRWB_NUMBER_OF_MODES;
     } else {
         encoder->modes     = sw_codec_evs_modes;
