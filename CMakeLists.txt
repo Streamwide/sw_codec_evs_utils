@@ -3,17 +3,30 @@ project(sw_codec_evs_utils C)
 
 set (DIRLIBEVS              ./c-code)
 
-set (EVS_VERSION h00)
+set(EVS_VERSION "h00" CACHE STRING "The TS 26.442/26.443 version to use")
+set(EVS_NUMBER "443")
+
+option(WITH_FIXED_POINT "Use FIXED POINT implementation instead of FLOATING POINT" OFF )
+
+if (WITH_FIXED_POINT)
+    add_definitions(-DEVS_FX=1)
+    set(EVS_NUMBER "442")
+endif (WITH_FIXED_POINT)
+
+set(EVS_URL https://www.3gpp.org/ftp/Specs/archive/26_series/26.${EVS_NUMBER}/26${EVS_NUMBER}-${EVS_VERSION}.zip)
+
+
+message("Will build using ${EVS_URL}")
 
 include(FetchContent)
 FetchContent_Declare(
-  ts26443
-  URL      https://www.3gpp.org/ftp/Specs/archive/26_series/26.443/26443-${EVS_VERSION}.zip
+  ts2644x
+  URL ${EVS_URL}
 )
-FetchContent_MakeAvailable(ts26443)
+FetchContent_MakeAvailable(ts2644x)
 
 file(ARCHIVE_EXTRACT
-    INPUT ${ts26443_SOURCE_DIR}/26443-${EVS_VERSION}-ANSI-C_source_code.zip
+    INPUT ${ts2644x_SOURCE_DIR}/26${EVS_NUMBER}-${EVS_VERSION}-ANSI-C_source_code.zip
     VERBOSE
 )
 

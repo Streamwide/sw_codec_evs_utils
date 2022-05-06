@@ -52,6 +52,11 @@
 #define EVS(a) a##_fx
 #include <cnst_fx.h> /* for MAX_BITS_PER_FRAME, etc */
 #include <prot_fx.h> /* for amr_wb_enc, etc */
+
+#ifndef NO_DATA
+#define NO_DATA 15
+#endif
+
 #else
 #define EVS(a) a
 #include <cnst.h> /* for MAX_BITS_PER_FRAME, etc */
@@ -495,7 +500,7 @@ static bool sw_codec_evs_decoder_check(EVS(Decoder_State) * st, uint8_t* data, s
         LOGD("Invalid packet %zu < %zu + %zu", len, frame_len, offset)
         return false;
     }
-    read_indices_from_djb(st, data + offset, total_brate / 50, is_amrwb, core_mode, qbit, 0, 0);
+    EVS(read_indices_from_djb)(st, data + offset, total_brate / 50, is_amrwb, core_mode, qbit, 0, 0);
     return true;
 }
 
